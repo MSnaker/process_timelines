@@ -4,7 +4,7 @@ from numpy.core.numeric import zeros_like
 import pandas as pd
 from timeline import TimeLine
 
-file_name = './file/timestamps.xlsx'
+file_name = './file/timestamps2.xlsx'
 data = pd.read_excel(file_name, sheet_name='Sheet1')
 
 # print(data)

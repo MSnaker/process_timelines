@@ -55,13 +55,28 @@ class TimeLine(object):
 
             # remove y axis and spines
             ax.yaxis.set_visible(False)
-            if i != len(axes.flatten())-1:
-                ax.xaxis.set_visible(False)
-            else:
-                ax.set_xlabel('[s]')
+            
+            # if i != len(axes.flatten())-1:
+            #     ax.xaxis.set_visible(False)
+            #     ax.spines[["left", "top", "right","bottom"]].set_visible(False)
+            # else:
+            #     ax.spines[["left", "top", "right"]].set_visible(False)
+            #     ax.set_xlabel('[s]')
             ax.spines[["left", "top", "right"]].set_visible(False)
+            if i == len(axes.flatten())-1:
+                ax.set_xlabel('[s]')
+            ax.grid(True,axis="x")
 
             ax.margins(y=0.15)
             # print(self.name)
+
+        ax3 = fig.add_subplot(111, zorder=-1)
+        for _, spine in ax3.spines.items():
+            spine.set_visible(False)
+        ax3.tick_params(labelleft=False, labelbottom=False, left=False, right=False )
+        ax3.get_shared_x_axes().join(ax3,axes[0])
+        ax3.grid(axis="x")
+
+
 
         plt.savefig(''.join([self.title,'.png']))
