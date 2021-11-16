@@ -1,8 +1,5 @@
-from matplotlib import colors
 import matplotlib.pyplot as plt
 import numpy as np
-from numpy.core.numeric import empty_like
-import pandas as pd
 import warnings
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 
@@ -15,15 +12,10 @@ class TimeLine(object):
         self.title = graph
     
     def plot(self):
+
         nplots = len(self.timestamps)
         fig, axes = plt.subplots(nrows = nplots, ncols = 1, sharex='all', squeeze=True)
-        # (figsize=(8.8, 4), constrained_layout=True)
 
-        # print('Find a way to build an array of arrays of different lengths')
-        # maxlen = max([len(timestp) for timestp in self.timestamps])
-        # print(maxlen)
-        # levels = np.zeros([nplots,maxlen])
-        # print(levels)
         levels = np.empty_like(self.timestamps, dtype=object)
         for curr in range(0,nplots):
             # Choose some nice levels
@@ -32,6 +24,7 @@ class TimeLine(object):
         np.ndarray.tolist(levels)
 
         for i, ax in enumerate(axes.flatten()):
+
             # Create figure and plot a stem plot with the date
             ax.set(title=None)
             ax.vlines(self.timestamps[i], 0, levels[i], color="tab:red")  # The vertical stems.
@@ -76,7 +69,5 @@ class TimeLine(object):
         ax3.tick_params(labelleft=False, labelbottom=False, left=False, right=False )
         ax3.get_shared_x_axes().join(ax3,axes[0])
         ax3.grid(axis="x")
-
-
 
         plt.savefig(''.join([self.title,'.png']))

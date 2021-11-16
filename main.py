@@ -1,14 +1,13 @@
 from datetime import datetime
 import numpy as np
-from numpy.core.numeric import zeros_like
 import pandas as pd
 from timeline import TimeLine
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
-file_name = './file/timestamps2.xlsx'
+Tk().withdraw()
+file_name = askopenfilename()
 data = pd.read_excel(file_name, sheet_name='Sheet1')
-
-# print(data)
-
 
 l=0
 datatimes,datalabels,datahandlers,datatitle = [],[],[],[]
@@ -30,8 +29,6 @@ while(l<len(data.columns)):
 for i in range(0,len(datatimes)):
     datatitle.append(''.join(["numero",str(int(i))]))
 
-# print(datahandlers)
-
 tl = TimeLine(datatimes,datalabels,datahandlers,datatitle, graph=datetime.now().strftime("%Y%m%d_%H%M%S") )
 tl.plot()
-# print(datatimes,datalabels,datahandlers)
+

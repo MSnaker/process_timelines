@@ -2,10 +2,16 @@ from numpy.core.numeric import empty_like
 import pandas as pd
 import numpy as np
 from timeline import TimeLine
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
-file_name = './file/prova.xlsx'
-data = pd.read_excel(file_name, sheet_name='Sheet1')
+Tk().withdraw()
+filename = askopenfilename()
 
+# file_name = ''.join(['./file/',filename])
+data = pd.read_excel(filename, sheet_name='Sheet1')
+
+print(data)
 # tl = TimeLine(data["timestamps"],data["caption"], "titolo")
 # print(tl.timestamps, '\n', tl.labels)
 
@@ -20,12 +26,12 @@ data = pd.read_excel(file_name, sheet_name='Sheet1')
 # print(np.tile([-5, 5, -3, 3, -1, 1],
 #                 int(np.ceil(len(tatas)/6))))
 
-timestampstest = [[0,2,3,4,5,6],[5,4,3,2],[1,4,7,10,13]]
-levels = np.empty_like(timestampstest, dtype=object)
-for curr in range(0,len(timestampstest)):
-    # Choose some nice levels
-    levels[curr] = np.tile([-5, 5, -3, 3, -1, 1],
-                    int(np.ceil(len(timestampstest[curr])/6)))[:len(timestampstest[curr])]
-np.ndarray.tolist(levels)
+# timestampstest = [[0,2,3,4,5,6],[5,4,3,2],[1,4,7,10,13]]
+# levels = np.empty_like(timestampstest, dtype=object)
+# for curr in range(0,len(timestampstest)):
+#     # Choose some nice levels
+#     levels[curr] = np.tile([-5, 5, -3, 3, -1, 1],
+#                     int(np.ceil(len(timestampstest[curr])/6)))[:len(timestampstest[curr])]
+# np.ndarray.tolist(levels)
 
-print(levels)
+# print(levels)
