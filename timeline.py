@@ -14,7 +14,7 @@ class TimeLine(object):
     def plot(self):
 
         nplots = len(self.timestamps)
-        fig, axes = plt.subplots(nrows = nplots, ncols = 1, sharex='all', squeeze=True)
+        fig, axes = plt.subplots(nrows = nplots, ncols = 1, sharex='all', figsize=(20/2.54, 10/2.54))
 
         levels = np.empty_like(self.timestamps, dtype=object)
         for curr in range(0,nplots):
@@ -27,24 +27,27 @@ class TimeLine(object):
 
             # Create figure and plot a stem plot with the date
             ax.set(title=None)
-            ax.vlines(self.timestamps[i], 0, levels[i], color="tab:red")  # The vertical stems.
+            ax.vlines(self.timestamps[i], 0, levels[i], linewidth=1, color="k")  # The vertical stems.
             ax.plot(self.timestamps[i], np.zeros_like(self.timestamps[i]), "-o",
-                    color="k", markerfacecolor="w")  # Baseline and markers on it.
+                    color="k", markerfacecolor="w", markersize=3, linewidth=1)  # Baseline and markers on it.
             
             # annotate lines
             for d, l, r, handler in zip(self.timestamps[i], levels[i], self.labels[i], self.handlers[i]):
+                timestring = ':'.join([str(int(d/60)).zfill(2),str(int(d%60)).zfill(2)])
                 if handler == 'A':
-                    ax.annotate(r, xy=(d, l),
-                                xytext=(-3, np.sign(l)*3), textcoords="offset points",
+                    ax.annotate(timestring + '\n' + r, xy=(d, l),
+                                xytext=(-2, np.sign(l)*3), textcoords="offset points",
                                 horizontalalignment="left",
                                 verticalalignment="bottom" if l > 0 else "top",
-                                color='red')
+                                color='red',
+                                fontsize=3)
                 else:
-                    ax.annotate(r, xy=(d, l),
-                                xytext=(-3, np.sign(l)*3), textcoords="offset points",
+                    ax.annotate(timestring + '\n' + r, xy=(d, l),
+                                xytext=(-2, np.sign(l)*3), textcoords="offset points",
                                 horizontalalignment="left",
                                 verticalalignment="bottom" if l > 0 else "top",
-                                color='blue')
+                                color='blue',
+                                fontsize=3)
 
             # remove y axis and spines
             ax.yaxis.set_visible(False)
@@ -60,7 +63,7 @@ class TimeLine(object):
                 ax.set_xlabel('[s]')
             ax.grid(True,axis="x")
 
-            ax.margins(y=0.15)
+            ax.margins(y=0.40)
             # print(self.name)
 
         ax3 = fig.add_subplot(111, zorder=-1)
@@ -70,4 +73,4 @@ class TimeLine(object):
         ax3.get_shared_x_axes().join(ax3,axes[0])
         ax3.grid(axis="x")
 
-        plt.savefig(''.join([self.title,'.png']))
+        plt.savefig(''.join([self.title,'.png']), dpi=300)

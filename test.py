@@ -2,16 +2,29 @@ from numpy.core.numeric import empty_like
 import pandas as pd
 import numpy as np
 from timeline import TimeLine
-from tkinter import Tk
+from tkinter import *
+from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 
-Tk().withdraw()
-filename = askopenfilename()
+def openfile():
+    global filename
+    filename = askopenfilename()
+
+root = Tk()
+frm = ttk.Frame(root, padding=10)
+frm.grid()  
+ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
+ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1,row=0)
+ttk.Button(frm, text="Get file", command=lambda: openfile()).grid(column=1,rowspan=2)
+root.mainloop()
+
 
 # file_name = ''.join(['./file/',filename])
 data = pd.read_excel(filename, sheet_name='Sheet1')
 
 print(data)
+
+
 # tl = TimeLine(data["timestamps"],data["caption"], "titolo")
 # print(tl.timestamps, '\n', tl.labels)
 
